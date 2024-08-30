@@ -168,7 +168,7 @@ func (s *SubService) getLink(inbound *model.Inbound, email string) string {
 }
 
 func (s *SubService) genVmessLink(inbound *model.Inbound, email string) string {
-	if inbound.Protocol != model.VMess {
+	if inbound.Protocol != model.VMESS {
 		return ""
 	}
 	obj := map[string]interface{}{
@@ -281,6 +281,7 @@ func (s *SubService) genVmessLink(inbound *model.Inbound, email string) string {
 		}
 	}
 	obj["id"] = clients[clientIndex].ID
+	obj["scy"] = clients[clientIndex].Security
 
 	externalProxies, _ := stream["externalProxy"].([]interface{})
 
@@ -1023,10 +1024,9 @@ func (s *SubService) genRemark(inbound *model.Inbound, email string, extra strin
 					remark = append(remark, fmt.Sprintf("%dM⏳", minutes))
 				}
 			case exp < 0:
-				passedSeconds := now - exp
-				days := passedSeconds / 86400
-				hours := (passedSeconds % 86400) / 3600
-				minutes := (passedSeconds % 3600) / 60
+				days := exp / -86400
+				hours := (exp % -86400) / 3600
+				minutes := (exp % -3600) / 60
 				if days > 0 {
 					if hours > 0 {
 						remark = append(remark, fmt.Sprintf("%dD,%dH⏳", days, hours))

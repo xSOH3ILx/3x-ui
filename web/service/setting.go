@@ -45,7 +45,7 @@ var defaultValueMap = map[string]string{
 	"tgRunTime":          "@daily",
 	"tgBotBackup":        "false",
 	"tgBotLoginNotify":   "true",
-	"tgCpu":              "0",
+	"tgCpu":              "80",
 	"tgLang":             "en-US",
 	"secretEnable":       "false",
 	"subEnable":          "false",
@@ -62,6 +62,7 @@ var defaultValueMap = map[string]string{
 	"subJsonPath":        "/json/",
 	"subJsonURI":         "",
 	"subJsonFragment":    "",
+	"subJsonNoise":       "",
 	"subJsonMux":         "",
 	"subJsonRules":       "",
 	"datepicker":         "gregorian",
@@ -269,11 +270,11 @@ func (s *SettingService) SetTgBotChatId(chatIds string) error {
 	return s.setString("tgBotChatId", chatIds)
 }
 
-func (s *SettingService) GetTgbotenabled() (bool, error) {
+func (s *SettingService) GetTgbotEnabled() (bool, error) {
 	return s.getBool("tgBotEnable")
 }
 
-func (s *SettingService) SetTgbotenabled(value bool) error {
+func (s *SettingService) SetTgbotEnabled(value bool) error {
 	return s.setBool("tgBotEnable", value)
 }
 
@@ -458,6 +459,10 @@ func (s *SettingService) GetSubJsonFragment() (string, error) {
 	return s.getString("subJsonFragment")
 }
 
+func (s *SettingService) GetSubJsonNoise() (string, error) {
+	return s.getString("subJsonNoise")
+}
+
 func (s *SettingService) GetSubJsonMux() (string, error) {
 	return s.getString("subJsonMux")
 }
@@ -524,7 +529,7 @@ func (s *SettingService) GetDefaultSettings(host string) (interface{}, error) {
 		"pageSize":      func() (interface{}, error) { return s.GetPageSize() },
 		"defaultCert":   func() (interface{}, error) { return s.GetCertFile() },
 		"defaultKey":    func() (interface{}, error) { return s.GetKeyFile() },
-		"tgBotEnable":   func() (interface{}, error) { return s.GetTgbotenabled() },
+		"tgBotEnable":   func() (interface{}, error) { return s.GetTgbotEnabled() },
 		"subEnable":     func() (interface{}, error) { return s.GetSubEnable() },
 		"subURI":        func() (interface{}, error) { return s.GetSubURI() },
 		"subJsonURI":    func() (interface{}, error) { return s.GetSubJsonURI() },
