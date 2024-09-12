@@ -32,10 +32,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.
 
 ## Install Custom Version
 
-To install your desired version, add the version to the end of the installation command. e.g., ver `v2.3.14`:
+To install your desired version, add the version to the end of the installation command. e.g., ver `v2.4.0`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.3.14
+bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.4.0
 ```
 
 ## SSL Certificate
@@ -286,6 +286,7 @@ Our platform offers compatibility with a diverse range of architectures and devi
 - Indonesian
 - Ukrainian
 - Turkish
+- Português (Brazil)
 
 
 ## Features
@@ -357,17 +358,6 @@ Our platform offers compatibility with a diverse range of architectures and devi
 **For versions `v2.1.0` and later:**
 
 WARP is built-in, and no additional installation is required. Simply turn on the necessary configuration in the panel.
-
-**For versions before `v2.1.0`:**
-
-1. Run the `x-ui` command in the terminal, then choose `WARP Management`.
-2. You will see the following options:
-
-   - **Account Type (free, plus, team):** Choose the appropriate account type.
-   - **Enable/Disable WireProxy:** Toggle WireProxy on or off.
-   - **Uninstall WARP:** Remove the WARP application.
-
-3. Configure the settings as needed in the panel.
 
 </details>
 

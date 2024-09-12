@@ -37,7 +37,7 @@ func (j *CheckClientIpJob) Run() {
 
 	shouldClearAccessLog := false
 	f2bInstalled := j.checkFail2BanInstalled()
-	isAccessLogAvailable := j.checkAccessLogAvailable(f2bInstalled)
+	isAccessLogAvailable := j.checkAccessLogAvailable()
 
 	if j.hasLimitIp() {
 		if f2bInstalled && isAccessLogAvailable {
@@ -49,7 +49,7 @@ func (j *CheckClientIpJob) Run() {
 		}
 	}
 
-	if shouldClearAccessLog || isAccessLogAvailable && time.Now().Unix()-j.lastClear > 3600 {
+	if shouldClearAccessLog || (isAccessLogAvailable && time.Now().Unix()-j.lastClear > 3600) {
 		j.clearAccessLog()
 	}
 }
@@ -122,13 +122,13 @@ func (j *CheckClientIpJob) processLogFile() bool {
 	for scanner.Scan() {
 		line := scanner.Text()
 
-		ipRegx, _ := regexp.Compile(`(\d+\.\d+\.\d+\.\d+).* accepted`)
+		ipRegx, _ := regexp.Compile(`from \[?([0-9a-fA-F:.]+)\]?:\d+ accepted`)
 		emailRegx, _ := regexp.Compile(`email:.+`)
 
 		matches := ipRegx.FindStringSubmatch(line)
 		if len(matches) > 1 {
 			ip := matches[1]
-			if ip == "127.0.0.1" {
+			if ip == "127.0.0.1" || ip == "::1" {
 				continue
 			}
 
@@ -174,27 +174,18 @@ func (j *CheckClientIpJob) checkFail2BanInstalled() bool {
 	return err == nil
 }
 
-func (j *CheckClientIpJob) checkAccessLogAvailable(handleWarning bool) bool {
+func (j *CheckClientIpJob) checkAccessLogAvailable() bool {
 	isAvailable := true
-	warningMsg := ""
 	accessLogPath, err := xray.GetAccessLogPath()
 	if err != nil {
 		return false
 	}
 
-	// access log is not available if it is set to 'none' or an empty string
 	switch accessLogPath {
-	case "none":
-		warningMsg = "Access log is set to 'none', check your Xray Configs"
-		isAvailable = false
-	case "":
-		warningMsg = "Access log doesn't exist in your Xray Configs"
+	case "none", "":
 		isAvailable = false
 	}
 
-	if handleWarning && warningMsg != "" {
-		logger.Warning(warningMsg)
-	}
 	return isAvailable
 }
 
