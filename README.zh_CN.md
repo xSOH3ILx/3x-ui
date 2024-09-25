@@ -32,10 +32,10 @@ bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.
 
 ## 安装指定版本
 
-要安装所需的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.4.0`:
+要安装所需的版本，请将该版本添加到安装命令的末尾。 e.g., ver `v2.4.2`:
 
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.4.0
+bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh) v2.4.2
 ```
 
 ### SSL证书
@@ -243,11 +243,14 @@ location /sub {
 - CentOS 8+
 - Fedora 36+
 - Arch Linux
+- Parch Linux
 - Manjaro
 - Armbian
-- AlmaLinux 9+
-- Rockylinux 9+
+- AlmaLinux 8+
+- Rocky Linux 8+
+- Oracle Linux 8+
 - OpenSUSE Tubleweed
+- Amazon Linux 2023
 
 ## 支持的架构和设备
 <details>
